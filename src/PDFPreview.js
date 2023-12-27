@@ -1,17 +1,16 @@
 import React from 'react';
-import { Document, Page, PDFViewer } from '@react-pdf/renderer';
+import { Document, Page, pdfjs } from 'react-pdf';
 
 const PDFPreview = ({ pdfSource }) => {
   console.log(pdfSource);
+  pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/legacy/build/pdf.worker.min.js`;
   if (!pdfSource) {
     return;
   }
   return (
-    <PDFViewer width="600" height="800">
       <Document file={pdfSource}>
         <Page pageNumber={1} />
       </Document>
-    </PDFViewer>
   );
 };
 

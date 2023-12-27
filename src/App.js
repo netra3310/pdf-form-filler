@@ -1,5 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { PDFDocument } from 'pdf-lib';
+// import PDFDisplay from './PDFDisplay';
+// import PDFViewer from './PDFViewer';
 // import { Document, Page } from '@react-pdf/renderer';
 // import PDFPreview from './PDFPreview';
 // import PDFViewer from 'pdf-viewer-reactjs'
@@ -15,6 +17,7 @@ import { PDFDocument } from 'pdf-lib';
 // }
 
 const App = () => {
+	const iframeRef = useRef(null)
   const [pdfDoc, setPdfDoc] = useState(null);
 	const [pdfSource, setPdfSource] = useState(null);
 	const [pdfUrl, setPdfUrl] = useState(null);
@@ -52,16 +55,17 @@ const App = () => {
     fields.forEach(field => {
       const type = field.constructor.name
       const name = field.getName()
-      console.log(`${type}: ${name}`)
+      // console.log(`${type}: ${name}`)
     });
 
 		try {
 			const nameField = form.getTextField('CharacterName 2');
-			nameField.setText('Mario1111');
-			console.log(nameField);
-			console.log("success");
+			nameField.setText('Mario222');
+			form.flatten();
+			// console.log(nameField);
+			// console.log("success");
 		} catch(e) {
-			console.log('error : ', e);
+			// console.log('error : ', e);
 		}
 		
 		// const ageField = form.getTextField('Age');
@@ -96,6 +100,7 @@ const App = () => {
 		// link.click();
 	};
 
+
 	return (
 		<div>
 			<h1>PDF Form Filler</h1>
@@ -104,15 +109,19 @@ const App = () => {
       </div>
 			<div>
 				{pdfUrl && (
+					// <PDFDisplay pdfUrl={pdfUrl} />
+					// <PDFViewer pdfUrl={pdfUrl} />
 					// <PDFPreview pdfSource={pdfUrl} />
-					<iframe
-						key={1}
-						title="PDF Viewer"
-						src={pdfUrl + '#toolbar=0&navpanes=0'}
-						width="100%"
-						height="700px"
-						className="mb-8"
-					/>
+					// <iframe
+					// 	ref={iframeRef}
+					// 	key={1}
+					// 	title="PDF Viewer"
+					// 	src={pdfUrl + '#toolbar=0&navpanes=0'}
+					// 	width="100%"
+					// 	height="700px"
+					// 	className="mb-8"
+					// />
+					<object width='100%' height={'400'} data={pdfUrl} type='application/pdf'/>
 				)}
 			</div>
 			<div>
